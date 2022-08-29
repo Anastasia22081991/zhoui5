@@ -66,15 +66,16 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "at.clouddna.training03.zhoui5.i18n.i18n"
-        }
+          "bundleName": "at.clouddna.training03.zhoui5.i18n.i18n"}
       },
       "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": {}
-      }
-    },
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "data/customers.json"},
+
+    "gendersModel": {
+      "type": "sap.ui.model.json.JSONModel",
+      "uri": "data/genders.json"}
+},
     "resources": {
       "css": [
         {
