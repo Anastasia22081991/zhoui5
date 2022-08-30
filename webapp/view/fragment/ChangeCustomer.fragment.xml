@@ -29,7 +29,7 @@
                 <Label id="edit_label_title" text="{i18n>app.title}" labelFor="edit_input_title"/>
                 <Input id="edit_input_title" value="{/title}"/>		
                 <Label id="edit_label_gender" text="{i18n>app.gender}" labelFor="edit_select_gender"/>
-                <Select id="edit_select_gender" items="{gendersModel>/genders}">
+                <Select id="edit_select_gender" items="{gendersModel>/genders}" selectedKey="{/gender}">
                 <items>
                     <core:Item id="g1" key="{gendersModel>}" 
                              text="{path: 'gendersModel>' , formatter: '.genderFormatter'}"/>

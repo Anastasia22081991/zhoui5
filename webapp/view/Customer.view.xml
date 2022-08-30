@@ -5,20 +5,40 @@
     xmlns:core="sap.ui.core">
 <Page id="page" title="{i18n>title}">
 
+<customHeader>
+    <OverflowToolbar id="IDToolbar1">  
+        <Title id="_IDGenTitle1" text="{i18n>title}"/>
+        <ToolbarSpacer id="IDToolbarSpacer1"/>
+                <Button id="app_editbutton" text="{i18n>edit}" type="Emphasized"
+                      icon="sap-icon://edit" press="onEditPressed"/>
+    </OverflowToolbar>
+</customHeader>
+
+<!--
 <content>
 <core:Fragment id="app_change_fragment" 
      fragmentName="at.clouddna.training03.zhoui5.view.fragment.ChangeCustomer"
-     type="XML"/>
+     type="XML"/> 
+<core:Fragment id="app_display_fragment" 
+     fragmentName="at.clouddna.training03.zhoui5.view.fragment.DisplayCustomer"
+     type="XML"/>    
 </content>
+-->
 
 <footer>
     <Bar id="BarId1">
         <contentRight>
-            <Button id="app_savebutton1"
+            <Button id="app_savebutton"
                     text="{i18n>save}"
                     icon="sap-icon://save"
                     type="Accept"                 
                     press="onSavePressed"
+            />
+            <Button id="app_cancelbutton"
+                    text="{i18n>cancel}"
+                    icon="sap-icon://cancel"
+                    type="Cancel"                 
+                    press="onCancelPressed"
             />
         </contentRight>
     </Bar>

@@ -9,15 +9,25 @@ sap.ui.define([
         "use strict";
 
         return Controller.extend("at.clouddna.training03.zhoui5.controller.Customer", {
-            onInit: function () {
-            },
+            //Lebenszyklusmethoden:
+            onInit: function () {  //Initialisierungsmethode
 
+            },
+            onExit: function () {},
+            onBeforeRendering: function () {},
+            onAfterRendering: function () {},
+            //ENDE Lebenszyklusmethoden
+            
             onSavePressed: function(){
                 let oView = this.getView();
                 let oModel = oView.getModel();
                 let oData = oModel.getData();
             
                 MessageBox.success(JSON.stringify(oData));
+            },
+
+            onCancelPressed: function(){
+
             },
 
             genderFormatter: function (sGender) {
