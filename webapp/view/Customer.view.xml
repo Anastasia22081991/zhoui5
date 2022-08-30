@@ -3,16 +3,33 @@
     xmlns="sap.m"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Page id="page" title="{i18n>title}">
+<Page id="page" title="{i18n>title}">
 
+<content>
 <core:Fragment id="app_change_fragment" 
      fragmentName="at.clouddna.training03.zhoui5.view.fragment.ChangeCustomer"
      type="XML"/>
+</content>
+
+<footer>
+    <Bar id="BarId1">
+        <contentRight>
+            <Button id="app_savebutton1"
+                    text="{i18n>save}"
+                    icon="sap-icon://save"
+                    type="Accept"                 
+                    press="onSavePressed"
+            />
+        </contentRight>
+    </Bar>
+</footer>
+
+<!--     
 <core:Fragment id="edit_change_fragment" 
      fragmentName="at.clouddna.training03.zhoui5.view.fragment.ChangeCustomer"
      type="XML"/>
 
-<!--
+
       <content>  
        <HBox id="app_hbox_customerid">
 	        <items>
