@@ -3,14 +3,15 @@
     xmlns="sap.m"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-<Page id="page" title="{i18n>title}">
 
+<Page id="page" title="{i18n>title}">
 <customHeader>
     <OverflowToolbar id="IDToolbar1">  
         <Title id="_IDGenTitle1" text="{i18n>title}"/>
         <ToolbarSpacer id="IDToolbarSpacer1"/>
                 <Button id="app_editbutton" text="{i18n>edit}" type="Emphasized"
-                      icon="sap-icon://edit" press="onEditPressed"/>
+                      icon="sap-icon://edit" press="onEditPressed"
+                      visible="{= !${editModel>/editMode}}"/>
     </OverflowToolbar>
 </customHeader>
 
@@ -33,12 +34,14 @@
                     icon="sap-icon://save"
                     type="Accept"                 
                     press="onSavePressed"
+                    visible="{editModel>/editMode}"
             />
             <Button id="app_cancelbutton"
                     text="{i18n>cancel}"
                     icon="sap-icon://cancel"
                     type="Cancel"                 
                     press="onCancelPressed"
+                    visible="{editModel>/editMode}"
             />
         </contentRight>
     </Bar>
@@ -48,8 +51,6 @@
 <core:Fragment id="edit_change_fragment" 
      fragmentName="at.clouddna.training03.zhoui5.view.fragment.ChangeCustomer"
      type="XML"/>
-
-
       <content>  
        <HBox id="app_hbox_customerid">
 	        <items>
