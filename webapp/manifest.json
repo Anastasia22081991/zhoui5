@@ -16,13 +16,12 @@
       "toolsId": "93558878-0b8d-4040-88c2-818bb889abd0"
     },
     "dataSources": {
-      "mainService": {
-        "uri": "/sap/opu/odata/",
+      "ZHOUI5_CUSTOMER_SRV": {
+        "uri": "/sap/opu/odata/sap/ZHOUI5_CUSTOMER_SRV/",
         "type": "OData",
         "settings": {
-          "annotations": [],
-          "localUri": "localService/metadata.xml",
-          "odataVersion": "2.0"
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
         }
       }
     }
@@ -66,16 +65,25 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "at.clouddna.training03.zhoui5.i18n.i18n"}
+          "bundleName": "at.clouddna.training03.zhoui5.i18n.i18n"
+        }
       },
       "": {
+        "dataSource": "ZHOUI5_CUSTOMER_SRV",
+        "preload": true,
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "refreshAfterChange": true,
+          "useBatch": true,
+          "tokenHandling": true
+        }
+      },
+      "gendersModel": {
         "type": "sap.ui.model.json.JSONModel",
-        "uri": "data/customers.json"},
-
-    "gendersModel": {
-      "type": "sap.ui.model.json.JSONModel",
-      "uri": "data/genders.json"}
-},
+        "uri": "data/genders.json"
+      }
+    },
     "resources": {
       "css": [
         {
@@ -96,9 +104,16 @@
       "routes": [
         {
           "name": "RouteCustomer",
-          "pattern": ":?query:",
+          "pattern": "customer",
           "target": [
             "TargetCustomer"
+          ]
+        },
+        {
+          "name": "Main",
+          "pattern": "",
+          "target": [
+            "Main"
           ]
         }
       ],
@@ -109,6 +124,13 @@
           "clearControlAggregation": false,
           "viewId": "Customer",
           "viewName": "Customer"
+        },
+        "Main": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Main",
+          "viewName": "Main"
         }
       }
     },

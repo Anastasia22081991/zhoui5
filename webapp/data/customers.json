@@ -1,5 +1,8 @@
+{ 
+    "customers": [
+
 {
-"customerid": "123456",
+"customerid": "1000001",
 "firstname": "Max",
 "lastname": "Mustermann",
 "title": "Dr.",
@@ -7,4 +10,26 @@
 "email": "max.muster@gmx.de",
 "phone": "082125896321",
 "website": "www.clouddna.at"
+},
+{
+    "customerid": "1000002",
+    "firstname": "Maria",
+    "lastname": "Musterfrau",
+    "title": "Dr.",
+    "gender": "givers",
+    "email": "max.musterfrau@gmx.de",
+    "phone": "082125896321",
+    "website": "www.google.at"
+},
+{
+        "customerid": "1000003",
+        "firstname": "Ana",
+        "lastname": "Smith",
+        "title": "MSc.",
+        "gender": "female",
+        "email": "a.smith@gmx.de",
+        "phone": "01761594826",
+        "website": "www.blabla.de"
+}
+]
 }

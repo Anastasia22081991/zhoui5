@@ -17,7 +17,7 @@ sap.ui.define([
             //Lebenszyklusmethoden:
             onInit: function () {  //Initialisierungsmethode
                 let oEditModel = new JSONModel({ /*Für Zwischenspeichern von Edit/Display Mode*/
-                    editmode: false
+                    editMode: false  /*Auf Groß- und Kleinschreibung Achten! */
                 });
 
                 this.getView().setModel(oEditModel, "editModel");
@@ -54,10 +54,13 @@ sap.ui.define([
                 this._toggleEdit(true);
             },
             
+            /* Die Methode _toggleEdit nimmt einen Boolean entgegen und 
+            ändert je nach dem den Wert des Named-Models und fordert das Setzen des Fragments an */
+
             _toggleEdit: function(bEditMode){
                 let oEditModel = this.getView().getModel("editModel");
             
-                oEditModel.setProperty("/editmode", bEditMode);
+                oEditModel.setProperty("/editMode", bEditMode);
             
                 this._showCustomerFragment(bEditMode ? "ChangeCustomer" : "DisplayCustomer");
             },
