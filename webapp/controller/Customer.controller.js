@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "at/clouddna/training03/zhoui5/controller/BaseController",
     "sap/m/MessageBox",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
@@ -8,25 +8,27 @@ sap.ui.define([
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, JSONModel, Fragment, History) {
+    function (BaseController, MessageBox, JSONModel, Fragment, History) {
         "use strict";
 
-        return Controller.extend("at.clouddna.training03.zhoui5.controller.Customer", {
+        return BaseController.extend("at.clouddna.training03.zhoui5.controller.Customer", {
 
             _fragmentList: {},
             bCreate: false,
 
             //Lebenszyklusmethoden:
             onInit: function () {  //Initialisierungsmethode
+            this.setContentDensity();
+
                 let oEditModel = new JSONModel({ /*Für Zwischenspeichern von Edit/Display Mode*/
                     editMode: false  /*Auf Groß- und Kleinschreibung Achten! */
                 });
 
-                this.getView().setModel(oEditModel, "editModel");
+                this.setModel(oEditModel, "editModel");
                 
-                let oRouter = this.getOwnerComponent().getRouter();
-                oRouter.getRoute("Customer").attachPatternMatched(this._onPatternMatched, this);
-                oRouter.getRoute("CreateCustomer").attachPatternMatched(this._onCreatePatternMatched, this);
+                //let oRouter = this.getOwnerComponent().getRouter();
+                this.getRouter().getRoute("Customer").attachPatternMatched(this._onPatternMatched, this);
+                this.getRouter().getRoute("CreateCustomer").attachPatternMatched(this._onCreatePatternMatched, this);
             },
 
             /*nPatternMatched-Funktion aus dem oEvent den übergebenen Pfad auslesen 
@@ -38,7 +40,7 @@ sap.ui.define([
                 this.sCustomerPath = decodeURIComponent(sPath);
                 this.getView().bindElement(this.sCustomerPath);
 
-                this.getView().getModel("editModel").setProperty("/editMode", false);
+                this.getModel("editModel").setProperty("/editMode", false);
                 this._showCustomerFragment("DisplayCustomer");
 
             },
@@ -48,7 +50,7 @@ sap.ui.define([
                 let oNewCustomerContext = this.getView().getModel().createEntry("/CustomerSet");
                 this.getView().bindElement(oNewCustomerContext.getPath());
             
-                this.getView().getModel("editModel").setProperty("/editMode", true);
+                this.getModel("editModel").setProperty("/editMode", true);
                 this._showCustomerFragment("ChangeCustomer");
             },
             
@@ -60,8 +62,8 @@ sap.ui.define([
                 if (sPreviousHash !== undefined) {
                     window.history.go(-1);
                 } else {
-                    var oRouter = this.getOwnerComponent().getRouter();
-                    oRouter.navTo("Main");
+
+                    this.getOwnerComponent().getRouter().navTo("Main");
                 }
             },
 
@@ -99,7 +101,7 @@ sap.ui.define([
             ändert je nach dem den Wert des Named-Models und fordert das Setzen des Fragments an */
 
             _toggleEdit: function(bEditMode){
-                let oEditModel = this.getView().getModel("editModel");
+                let oEditModel = this.getModel("editModel");
             
                 oEditModel.setProperty("/editMode", bEditMode);
             
@@ -108,11 +110,11 @@ sap.ui.define([
 
             onSavePressed: function () {
             
-                let oView = this.getView();
-                let oModel = oView.getModel();
+                //let oView = this.getView();
+                let oModel = this.getModel();
                 let oData = oModel.getData();
 
-                let oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                let oResourceBundle = this.getModel("i18n").getResourceBundle();
                 let sSuccessText = this.bCreate ? oResourceBundle.getText("dialog.create.success") : oResourceBundle.getText("dialog.edit.success");
 
                 oModel.submitChanges({
@@ -134,7 +136,8 @@ sap.ui.define([
             },
 
             onCancelPressed: function () {
-                let oModel = this.getView().getModel();
+                //let oModel = this.getView().getModel();
+                let oModel = this.getModel();
                     oModel.resetChanges().then(() => {
                         if (this.bCreate) {
                             this.onNavBack();
@@ -145,8 +148,8 @@ sap.ui.define([
             },
 
             genderFormatter: function (sGender) {
-                let oView = this.getView();
-                let oI18nModel = oView.getModel("i18n");
+                //let oView = this.getView();
+                let oI18nModel = this.getModel("i18n");
                 let oResourceBundle = oI18nModel.getResourceBundle();
 
                 switch (sGender) {

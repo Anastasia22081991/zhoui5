@@ -1,13 +1,15 @@
 sap.ui.define(
     [
-        "sap/ui/core/mvc/Controller",
+        "at/clouddna/training03/zhoui5/controller/BaseController",
         "sap/m/MessageBox"
     ],
     function(BaseController, MessageBox) {
       "use strict";
   
       return BaseController.extend("at.clouddna.training03.zhoui5.controller.Main", {
-        onInit() {},
+        onInit() {
+            this.setContentDensity();
+        },
 
         onDeleteButtonPressed: function(oEvent){
             let oModel = this.getView().getModel();
@@ -28,21 +30,15 @@ sap.ui.define(
             });
         },
 
-        onCreatePressed: function(){
-            let oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("CreateCustomer", null, false);
-        },
-
         onListItemPressed: function(oEvent){
-            let sPath = oEvent.getSource().getBindingContext().getPath();
-            let oRouter = this.getOwnerComponent().getRouter();
-
-            oRouter.navTo("Customer",{
+            let sPath = oEvent.getSource().getBindingContext().getPath();            
+            this.getRouter().navTo("Customer",{
                 path: encodeURIComponent(sPath)
-            })
+            });
+        },
+        onCreatePressed: function(){
+            this.getRouter().navTo("CreateCustomer", null, false);            
         }
-
-      });
-    }
-  );
-  
+ });
+});
+   
