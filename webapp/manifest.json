@@ -103,11 +103,18 @@
       },
       "routes": [
         {
-          "name": "RouteCustomer",
-          "pattern": "customer",
+          "name": "Customer",
+          "pattern": "customer/{path}",
           "target": [
             "TargetCustomer"
           ]
+        },
+        {
+            "name": "CreateCustomer",
+            "pattern": "createcustomer",
+            "target": [
+                "TargetCustomer"
+            ]
         },
         {
           "name": "Main",
@@ -125,6 +132,7 @@
           "viewId": "Customer",
           "viewName": "Customer"
         },
+        
         "Main": {
           "viewType": "XML",
           "transition": "slide",

@@ -2,17 +2,19 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "sap/ui/core/routing/History"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageBox, JSONModel, Fragment) {
+    function (Controller, MessageBox, JSONModel, Fragment, History) {
         "use strict";
 
         return Controller.extend("at.clouddna.training03.zhoui5.controller.Customer", {
 
             _fragmentList: {},
+            bCreate: false,
 
             //Lebenszyklusmethoden:
             onInit: function () {  //Initialisierungsmethode
@@ -21,7 +23,46 @@ sap.ui.define([
                 });
 
                 this.getView().setModel(oEditModel, "editModel");
+                
+                let oRouter = this.getOwnerComponent().getRouter();
+                oRouter.getRoute("Customer").attachPatternMatched(this._onPatternMatched, this);
+                oRouter.getRoute("CreateCustomer").attachPatternMatched(this._onCreatePatternMatched, this);
+            },
+
+            /*nPatternMatched-Funktion aus dem oEvent den übergebenen Pfad auslesen 
+                und anschließend per bindElement auf die View binden.  */
+            _onPatternMatched: function (oEvent) {
+                this.bCreate = false;
+
+                let sPath = oEvent.getParameters().arguments.path;
+                this.sCustomerPath = decodeURIComponent(sPath);
+                this.getView().bindElement(this.sCustomerPath);
+
+                this.getView().getModel("editModel").setProperty("/editMode", false);
                 this._showCustomerFragment("DisplayCustomer");
+
+            },
+            _onCreatePatternMatched: function (oEvent) {
+                this.bCreate = true;
+
+                let oNewCustomerContext = this.getView().getModel().createEntry("/CustomerSet");
+                this.getView().bindElement(oNewCustomerContext.getPath());
+            
+                this.getView().getModel("editModel").setProperty("/editMode", true);
+                this._showCustomerFragment("ChangeCustomer");
+            },
+            
+            /*Zurückanvigation: */
+            onNavBack: function(){
+                var oHistory = History.getInstance();
+                var sPreviousHash = oHistory.getPreviousHash();
+            
+                if (sPreviousHash !== undefined) {
+                    window.history.go(-1);
+                } else {
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("Main");
+                }
             },
 
             _showCustomerFragment: function (sFragmentName) {
@@ -66,17 +107,41 @@ sap.ui.define([
             },
 
             onSavePressed: function () {
+            
                 let oView = this.getView();
                 let oModel = oView.getModel();
                 let oData = oModel.getData();
 
-                MessageBox.success(JSON.stringify(oData));
+                let oResourceBundle = this.getView().getModel("i18n").getResourceBundle();
+                let sSuccessText = this.bCreate ? oResourceBundle.getText("dialog.create.success") : oResourceBundle.getText("dialog.edit.success");
 
-                this._toggleEdit(false);
+                oModel.submitChanges({
+                    success: (oData, response) => {
+                        MessageBox.success(sSuccessText, {
+                            onClose: () => {
+                                if (this.bCreate) {
+                                    this.onNavBack();
+                                } else {
+                                    this._toggleEdit(false);
+                                }
+                            }
+                        });                        
+                    },
+                    error: (oError) => {
+                        MessageBox.error(oError.message);
+                    }
+                })
             },
 
             onCancelPressed: function () {
-                this._toggleEdit(false);
+                let oModel = this.getView().getModel();
+                    oModel.resetChanges().then(() => {
+                        if (this.bCreate) {
+                            this.onNavBack();
+                        } else {
+                            this._toggleEdit(false);
+                        }
+                    });
             },
 
             genderFormatter: function (sGender) {
