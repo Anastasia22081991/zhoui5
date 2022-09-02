@@ -37,11 +37,11 @@
                 </Select>
        <!--     <core:Title text="Weitere Informationen"/>-->
                 <Label id="edit_label_email" text="{i18n>app.email}" labelFor="edit_input_email"/>
-                <Input id="edit_input_email" value="{/email}"/>	
+                <Input id="edit_input_email" value="{Email}"/>	
                 <Label id="edit_label_phone" text="{i18n>app.phone}" labelFor="edit_input_phone"/>
-                <Input id="edit_input_phone" value="{/phone}"/>	
+                <Input id="edit_input_phone" value="{Phone}"/>	
                 <Label id="edit_label_website" text="{i18n>app.website}" labelFor="edit_input_website"/>
-                <Input id="edit_input_website" value="{/website}"/>	
+                <Input id="edit_input_website" value="{Website}"/>	
 			</f:content>
 		</f:SimpleForm>
 
